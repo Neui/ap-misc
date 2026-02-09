@@ -208,11 +208,14 @@ def main() -> int:
     for world_path in apworlds_to_remove.keys():
         log.debug("Removing %s", world_path)
         if not args.dryrun:
-            if move_to_path is not None:
-                log.error("TODO: Implement move to path")
-                raise NotImplementedError
-            else:
-                world_path.unlink()
+            try:
+                if move_to_path is not None:
+                    log.error("TODO: Implement move to path")
+                    raise NotImplementedError
+                else:
+                    world_path.unlink()
+            except:
+                log.exception("Failed to (re)move %s", world_path)
 
     return 0
 
