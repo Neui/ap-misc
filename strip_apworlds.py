@@ -89,11 +89,17 @@ def main() -> int:
                 if 'name' in entry and 'game' in entry}
 
     for child in pathlib.Path(args.players).iterdir():
-        with open(child, 'rt') as f:
-            # TODO look into why load_all doesn't work with multiple documents
-            # (but seemingly works on archipelago)
-            # inp = list(yaml.safe_load_all(input_file.read()))
-            inp = [yaml.safe_load(i) for i in f.read().split('\n---\n')]
+        if not child.is_file():
+            continue
+        try:
+            with open(child, 'rt') as f:
+                # TODO look into why load_all doesn't work with multiple documents
+                # (but seemingly works on archipelago)
+                # inp = list(yaml.safe_load_all(input_file.read()))
+                inp = [yaml.safe_load(i) for i in f.read().split('\n---\n')]
+        except:
+            log.exception()
+            continue
         for i, content in enumerate(inp):
             if 'game' in content:
                 if type(content['game']) is str:
