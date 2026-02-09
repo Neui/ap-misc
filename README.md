@@ -19,3 +19,9 @@ The `keep` column can be set to `true` to always keep the APworld, such as the U
 
 Note that this does not process APworlds as folders (like in `Archipelago/lib/worlds`).
 
+Example usage:
+
+```sh
+python3 strip_apworlds.py --database apworlds.csv "$HOME/bin/Archipelago/Players" "$HOME/bin/Archipelago/custom_worlds"
+```
+
