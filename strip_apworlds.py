@@ -15,7 +15,7 @@ from typing import Any
 
 log = logging.getLogger(__name__)
 meta_root_options = {"meta_description"}
-really_keep = {"A Link to the Past"} # TODO: Check the name for real
+really_keep = {"A Link to the Past"}
 keep_values = {"yes", "Yes", "true", "True", "keep"}
 
 
