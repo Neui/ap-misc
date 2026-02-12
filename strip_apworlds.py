@@ -96,7 +96,7 @@ def main() -> int:
                 inp = list(yaml.safe_load_all(f.read()))
         except:
             log.exception(f"Failed to parse {child}")
-            continue
+            return 1
         for i, content in enumerate(inp):
             if 'game' in content:
                 if type(content['game']) is str:
