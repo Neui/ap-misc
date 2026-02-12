@@ -101,8 +101,11 @@ def main() -> int:
             if 'game' in content:
                 if type(content['game']) is str:
                     games.add(content['game'])
+                    log.debug("%s #%i: Found ['%s']", child, i, content['game'])
                 elif type(content['game']) is dict:
                     games.update(content['game'].keys())
+                    log.debug("%s #%i: Found %r", child, i,
+                              list(content['game'].keys()))
                 else:
                     log.warning(f"{child} #{i + 1} unknown 'game' {type(game)}")
                     log.debug(f"{child} #{i + 1} unknown 'game' was %r", game)
