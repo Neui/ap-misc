@@ -98,7 +98,7 @@ def main() -> int:
                 # inp = list(yaml.safe_load_all(input_file.read()))
                 inp = [yaml.safe_load(i) for i in f.read().split('\n---\n')]
         except:
-            log.exception()
+            log.exception(f"Failed to parse {child}")
             continue
         for i, content in enumerate(inp):
             if 'game' in content:
