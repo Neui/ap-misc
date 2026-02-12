@@ -92,11 +92,8 @@ def main() -> int:
         if not child.is_file():
             continue
         try:
-            with open(child, 'rt') as f:
-                # TODO look into why load_all doesn't work with multiple documents
-                # (but seemingly works on archipelago)
-                # inp = list(yaml.safe_load_all(input_file.read()))
-                inp = [yaml.safe_load(i) for i in f.read().split('\n---\n')]
+            with open(child, 'rt', encoding='utf-8-sig') as f:
+                inp = list(yaml.safe_load_all(f.read()))
         except:
             log.exception(f"Failed to parse {child}")
             continue
