@@ -65,6 +65,7 @@ def main() -> int:
             else:
                 log.warning(f"{child} #{i + 1} unknown 'game' {type(game)}")
                 log.debug(f"{child} #{i + 1} unknown 'game' was %r", game)
+                continue
 
             weights.main_name = content['name']
 
