@@ -16,11 +16,6 @@ from typing import Any
 log = logging.getLogger(__name__)
 meta_root_options = {"meta_description"}
 
-def clean_name(name: str) -> str:
-    name = name.replace('{number}', '')
-    name = name.replace('{NUMBER}', '')
-    return name
-
 
 @dataclasses.dataclass
 class WeightsFile:
@@ -106,7 +101,7 @@ def main() -> int:
 
     for i, data in enumerate(all_names):
         name, weights = data
-        if '[player]' in name or '{PLAYER}' in name:
+        if '{player}' in name or '{PLAYER}' in name:
             raise NotImplementedError("{PLAYER} and {player} not yet implemented for %s", name)
         if '{number}' in name:
             counter[name] += 1  # Counting starts from 1
