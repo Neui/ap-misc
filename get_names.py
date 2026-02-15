@@ -51,36 +51,38 @@ def main() -> int:
                 index=i,
             )
 
-            if 'game' in content:
-                if type(content['game']) is str:
-                    weights.games.append(content['game'])
-                elif type(content['game']) is dict:
-                    weights.games.extend((game
-                                          for game, weight in content['game'].items()
-                                          if weight != 0))
-                else:
-                    log.warning(f"{child} #{i + 1} unknown 'game' {type(game)}")
-                    log.debug(f"{child} #{i + 1} unknown 'game' was %r", game)
+            if 'game' not in content:
+                if 'meta_description' not in content:
+                    info.warning(f"{child} #{i + 1} does not have 'game'")
+                continue
 
-                weights.main_name = content['name']
+            if type(content['game']) is str:
+                weights.games.append(content['game'])
+            elif type(content['game']) is dict:
+                weights.games.extend((game
+                                      for game, weight in content['game'].items()
+                                      if weight != 0))
+            else:
+                log.warning(f"{child} #{i + 1} unknown 'game' {type(game)}")
+                log.debug(f"{child} #{i + 1} unknown 'game' was %r", game)
 
-                triggers = content.get('triggers', [])
-                for game in weights.games:
-                    triggers.extend(content.get(game, {}).get('triggers', []))
+            weights.main_name = content['name']
 
-                for trigger in triggers:
-                    opts = trigger.get('options', {})
-                    name = None
-                    if '' in opts and 'name' in opts['']:
-                        name = opts['']['name']
-                    elif None in opts and 'name' in opts[None]:
-                        name = opts[None]['name']
-                    if name is not None:
-                        weights.possible_names.append(name)
+            triggers = content.get('triggers', [])
+            for game in weights.games:
+                triggers.extend(content.get(game, {}).get('triggers', []))
 
-                all_weights.append(weights)
-            elif 'meta_description' not in content:
-                info.warning(f"{child} #{i + 1} does not have 'game'")
+            for trigger in triggers:
+                opts = trigger.get('options', {})
+                name = None
+                if '' in opts and 'name' in opts['']:
+                    name = opts['']['name']
+                elif None in opts and 'name' in opts[None]:
+                    name = opts[None]['name']
+                if name is not None:
+                    weights.possible_names.append(name)
+
+            all_weights.append(weights)
 
     all_names = [[weights.main_name, weights] for weights in all_weights]
     for weights in all_weights:
