@@ -63,7 +63,6 @@ def main() -> int:
                     log.debug(f"{child} #{i + 1} unknown 'game' was %r", game)
 
                 weights.main_name = content['name']
-                main_name = clean_name(content['name'])
 
                 triggers = content.get('triggers', [])
                 for game in weights.games:
