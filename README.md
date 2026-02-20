@@ -35,7 +35,7 @@ Copy `secrets.example.yaml` to `secrets.yaml`, visit https://archipelago.gg/sess
 
 Example usage after setup:
 ```py
-python3 /home/neui/bin/Archipelago/output/AP_68547229467390776870.zip
+python3 upload.py /home/neui/bin/Archipelago/output/AP_68547229467390776870.zip
 ```
 Example console output (also outputs the message to `message.txt`):
 ```
