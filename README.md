@@ -25,3 +25,11 @@ Example usage:
 python3 strip_apworlds.py --database apworlds.csv "$HOME/bin/Archipelago/Players" "$HOME/bin/Archipelago/custom_worlds"
 ```
 
+## `upload.py`
+
+Uploads and creates a room for the specified multiworld zip file to Archipelago and prepares a chat message to send out to your players.
+It uses `upload.yaml` as the configuration file which also contains the message.
+
+The script requires a secrets file containing your session ID to log into so it'll appear in your "User Content" and allows you to input admin commands.
+Copy `secrets.example.yaml` to `secrets.yaml`, visit https://archipelago.gg/session (or equivalent), and copy-past the session URL.
+

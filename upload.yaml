@@ -1,0 +1,25 @@
+# Where the multiworld will be uploaded to (needs to be AP webhost or compatible)
+service: "https://archipelago.gg"
+# Which hostname will be used (API doesn't return this)
+host: "archipelago.gg"
+
+# Chat message to prepare.
+# {room_link}: Link to the room with the patches and so on
+# {tracker_link}: Link to the webtracker
+# {host}: Host to connect to (set above)
+# {port}: Port to connect to
+# {anap_tracker_link}: Link to anap tracker
+message: |
+  ## Room
+  Room: {room_link} `/connect {host}:{port}`
+  Tracker: {tracker_link}
+  ANAP tracker: {anap_tracker_link}
+  
+  # Wait until after the countdown to start playing!
+message_output: message.txt
+
+anaptracker:
+  instance: "https://tomagueri.fr/anaptracker"
+  # Where room is hosted on.
+  # anap currently only supports "archipelago" and "bananium"
+  webhost: "archipelago"
