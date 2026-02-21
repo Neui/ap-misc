@@ -6,6 +6,7 @@ import argparse
 import http.cookiejar
 import json
 import logging
+import multiworld
 import pathlib
 import sys
 import time
@@ -125,6 +126,12 @@ def main() -> int:
     with open(args.multiworld, 'rb') as mw_file:
         multiworld_data = mw_file.read()
 
+    try:
+        apdata = multiworld.parse(multiworld_data)
+    except:
+        logging.exception("Failed to parse multiworld data")
+        apdata = multiworld.MultiWorld()
+
     log.info("Uploading multiworld")
     content_type, mwdata = generate_multipart_file(
         multiworld_data,
@@ -185,6 +192,7 @@ def main() -> int:
         room_link=config.room_url(room_id),
         host=config.host,
         port=port,
+        password=apdata.server_options.visible_password,
         tracker_id=tracker_id,
         tracker_link=config.tracker_url(tracker_id),
         sphere_tracker_link=config.sphere_tracker_url(tracker_id),
