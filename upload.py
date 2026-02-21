@@ -13,12 +13,10 @@ import urllib.parse
 import urllib.request
 import yaml
 
-
 log = logging.getLogger(__name__)
 
-user_agent = "ap-upload/0.1 (@Neui, dev)"
 http_headers = {
-    'User-Agent': user_agent,
+    'User-Agent': "ap-upload/0.1 (https://github.com/Neui/ap-misc)",
 }
 
 
@@ -50,10 +48,12 @@ class Config:
         return self.service + '/sphere_tracker/' + tracker_id
 
     def anap_url(self, room_id: str) -> str:
+        # TODO: Use self.anap_webhost?
+        # https://github.com/OriginalTomPouce/anaptracker/blob/3cfa3d925b88864cb1ef723a649b75c10b03c009/src/components/Home.vue#L76
         return self.anap_instance + '/room/' + room_id
 
     def fill(self, data):
-        self.service = data.get('service', self.service)
+        self.service = data.get('service', self.service).rstrip('/')
         if 'host' not in data.keys():
             u = urllib.parse.urlparse(self.service)
             self.host = data.get("host", u.hostname)
@@ -63,22 +63,23 @@ class Config:
         self.message_output = data.get("message_output", self.message_output)
         if 'anap' in data:
             anap = data['anap']
-            self.anap_instance = anap.get('instance', self.anap_instance)
+            self.anap_instance = anap.get('instance', self.anap_instance) \
+                .rstrip('/')
             self.anap_webhost = anap.get('webhost', self.anap_webhost)
 
 
 def generate_multipart_file(data, filename: str,
                             content_type: str = 'application/octet-stream'
-                            ) -> tuple[bytes, bytes]:
-    boundary = 'iamaboundaryseparatorillprobablynotappearintheedata'.encode('utf-8') # noqa
-    content_type = b'multipart/form-data; boundary=' + boundary
-    boundary = b'--' + boundary
+                            ) -> tuple[str, bytes]:
+    boundary_str = 'iamaboundaryseparatorillprobablynotappearintheedata'
+    http_content_type = f'multipart/form-data; boundary={boundary_str}'
+    boundary = b'--' + boundary_str.encode('utf-8')
     header = (
         f'Content-Disposition: form-data; name="file"; filename="{filename}"\r\n' # noqa
         f'Content-Type: {content_type}\r\n').encode('utf-8')
-    return (content_type,
-            boundary + b'\r\n' + header + b'\r\n'
-            + data + b'\r\n' + boundary + b'--\r\n')
+    return (http_content_type,
+            boundary + b'\r\n' + header + b'\r\n' + data + b'\r\n'
+            + boundary + b'--\r\n')
 
 
 def main() -> int:
@@ -105,21 +106,20 @@ def main() -> int:
     with open(args.secrets, "rt") as secret_file:
         secrets = yaml.safe_load(secret_file.read())
         if u.hostname not in secrets.keys():
-            log.error(f"No secret found for {u.hostname}")
+            log.error(f"No session found for {u.hostname} in secrets file")
             return 1
-        secret_url = str(secrets[u.hostname])
+        session_url = str(secrets[u.hostname])
         log.debug("Found secret for %s", u.hostname)
         del secrets
     del u
 
-    log.info("Loading secret cookies")
+    log.info("Loading session cookies")
     jar = http.cookiejar.CookieJar()
     opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(
         jar))
     opener.addheaders = list(http_headers.items())
-    req = urllib.request.Request(secret_url, method='GET')
-    with opener.open(req) as r:
-        log.debug("Loading secret status code: %r", r.status)
+    with opener.open(session_url) as r:
+        log.debug("Loading session status code: %r", r.status)
 
     log.info("Loading multiworld data")
     with open(args.multiworld, 'rb') as mw_file:
@@ -129,14 +129,13 @@ def main() -> int:
     content_type, mwdata = generate_multipart_file(
         multiworld_data,
         pathlib.Path(args.multiworld).name,
-        'application/zip')
-    req = urllib.request.Request(config.upload_url,
-                                 headers={
-                                     'Content-Type': content_type.decode('utf-8')
-                                 },
-                                 data=mwdata,
-                                 method='POST')
-    with opener.open(req) as r:
+        'application/zip' if args.multiworld.lower().endswith('.zip')
+        else 'application/octet-stream'
+    )
+    with opener.open(urllib.request.Request(
+            config.upload_url,
+            headers={'Content-Type': content_type},
+            data=mwdata, method='POST')) as r:
         log.debug("Status code: %r, url: %r", r.status, r.url)
         u = urllib.parse.urlparse(r.url)
         path = pathlib.PurePosixPath(u.path)
@@ -149,9 +148,7 @@ def main() -> int:
             return 1
 
     log.info("Opening new room")
-    req = urllib.request.Request(config.new_room_url(seed_id),
-                                 method='GET')
-    with opener.open(req) as r:
+    with opener.open(config.new_room_url(seed_id)) as r:
         log.debug("Status code: %r, url: %r", r.status, r.url)
         u = urllib.parse.urlparse(r.url)
         path = pathlib.PurePosixPath(u.path)
@@ -169,8 +166,7 @@ def main() -> int:
     for attempt in range(attempts):
         time.sleep(1)
         log.info("Attempt %d/%d", attempt + 1, attempts)
-        req = urllib.request.Request(room_status_url, method='GET')
-        with opener.open(req) as r:
+        with opener.open(room_status_url) as r:
             data = json.loads(r.read().decode('utf-8'))
         log.debug("Output: %r", data)
         if type(data) is dict and 'tracker' in data:
@@ -192,7 +188,7 @@ def main() -> int:
         tracker_id=tracker_id,
         tracker_link=config.tracker_url(tracker_id),
         sphere_tracker_link=config.sphere_tracker_url(tracker_id),
-        anap_tracker_link=config.anap_url(room_id)
+        anap_tracker_link=config.anap_url(room_id),
     )
     log.info("Message:\n%s", message)
     with open(config.message_output, "wt") as msg_out_file:
