@@ -184,10 +184,14 @@ def main() -> int:
     log.debug("Found connection: %r:%r", config.host, port)
 
     message = config.message.format(
+        seed_id=seed_id,
+        room_id=room_id,
         room_link=config.room_url(room_id),
         host=config.host,
         port=port,
+        tracker_id=tracker_id,
         tracker_link=config.tracker_url(tracker_id),
+        sphere_tracker_link=config.sphere_tracker_url(tracker_id),
         anap_tracker_link=config.anap_url(room_id)
     )
     log.info("Message:\n%s", message)
