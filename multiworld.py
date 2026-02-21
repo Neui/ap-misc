@@ -22,6 +22,10 @@ def SlotType(slot_type: int) -> int:
     return slot_type  # TODO: What is this? Maybe an enum? Look it up in AP src
 
 
+def HintStatus(hint_status: int) -> int:
+    return hint_status  # TODO: Look up what they mean
+
+
 @dataclasses.dataclass
 class SlotInfo:
     player_name: PlayerName
@@ -83,6 +87,8 @@ class MultiWorld:
 unpickle_mapping: unpickle.ResolveMapping = {
     ('NetUtils', 'NetworkSlot'): SlotInfo,
     ('NetUtils', 'SlotType'): SlotType,
+    ('NetUtils', 'Hint'): Hint,
+    ('NetUtils', 'HintStatus'): HintStatus,
 }
 
 
