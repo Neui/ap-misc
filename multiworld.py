@@ -48,12 +48,24 @@ class ServerOptions:
         return "" if self.password is None else str(self.password)
 
 
+@dataclasses.dataclass(frozen=True)
+class Hint:
+    unknown1: int
+    unknown2: int
+    unknown3: int
+    unknown4: int
+    unknown5: bool
+    unknown6: str
+    unknown7: int
+    hint_status: int
+
+
 @dataclasses.dataclass
 class MultiWorld:
-    slot_data: dict[PlayerId, dict[str, Any]] = dataclasses.field(default_factory={})
-    slot_info: dict[PlayerId, SlotInfo] = dataclasses.field(default_factory={})
-    connect_names: dict[PlayerName, tuple] = dataclasses.field(default_factory={}) # TODO: What is the format?
-    locations: dict[PlayerId, dict[int, tuple]] = dataclasses.field(default_factory={}) # TODO: What is the format?
+    slot_data: dict[PlayerId, dict[str, Any]] = dataclasses.field(default_factory=dict)
+    slot_info: dict[PlayerId, SlotInfo] = dataclasses.field(default_factory=dict)
+    connect_names: dict[PlayerName, tuple] = dataclasses.field(default_factory=dict) # TODO: What is the format?
+    locations: dict[PlayerId, dict[int, tuple]] = dataclasses.field(default_factory=dict) # TODO: What is the format?
     server_options: ServerOptions = dataclasses.field(default_factory=ServerOptions)
     version: Optional[tuple[int, int, int]] = (0, 0, 0)
     seed_name: str = ""
