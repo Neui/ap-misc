@@ -86,25 +86,35 @@ unpickle_mapping: unpickle.ResolveMapping = {
 }
 
 
-def parse(raw_data: Any):
+def _find_multiworld(raw_data: Any) -> bytes:
     if type(raw_data) is bytes or type(raw_data) is bytearray:
         raw_data = io.BytesIO(raw_data)
     try:
         with zipfile.ZipFile(raw_data) as zip_file:
             for filename in zip_file.namelist():
                 if filename.endswith('.archipelago'):
-                    return parse_bytes(zip_file.read(filename))
-                    break
+                    return zip_file.read(filename)
     except zipfile.BadZipFile:
         raw_data.seek(0)
-        return parse_bytes(raw_data.read())
+        return raw_data.read()
+    raise FileNotFoundError("Could not find .archipelago file")
 
 
-def parse_bytes(raw_data: bytes):
+def parse(raw_data: Any) -> MultiWorld:
+    return parse_bytes(_find_multiworld(raw_data))
+
+
+def _get_inner(raw_data) -> tuple[int, bytes]:
     format_version = raw_data[0]
     logging.debug("Found multiworld format version 0x%02x", format_version)
     # TODO: Check format version
-    data = unpickle.Unpickler(io.BytesIO(zlib.decompress(raw_data[1:]))).load()
+    return (format_version, zlib.decompress(raw_data[1:]))
+
+
+def parse_bytes(raw_data: bytes) -> MultiWorld:
+    format_version, inner_data = _get_inner(raw_data)
+    # TODO: Check format version
+    data = unpickle.Unpickler(io.BytesIO(inner_data)).load()
     data = unpickle.resolve(data, unpickle_mapping)
 
     so = data.get('server_options', {})
@@ -132,9 +142,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.description = "Parse a .archipelago world file"
 
+    parser.add_argument("--no-resolve", action='store_true', default=False,
+                        dest='noresolve',
+                        help="Don't resolve objects")
     parser.add_argument("world", type=str,
                         help="Path to .archipelago or .zip file")
 
     args = parser.parse_args()
     with open(args.world, 'rb') as f:
-        pprint.pp(parse(f), width=200)
+        if args.noresolve:
+            pprint.pp(unpickle.Unpickler(
+                io.BytesIO(_get_inner(_find_multiworld(f))[1])
+            ).load(), width=200)
+        else:
+            pprint.pp(parse(f), width=200)
