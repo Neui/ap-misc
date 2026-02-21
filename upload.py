@@ -89,6 +89,9 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.description = "Upload a multiworld and prepare chat message"
 
+    parser.add_argument("--dry-run", action='store_true', default=False,
+                        dest='dryrun',
+                        help="Run without actually uploading")
     parser.add_argument("--secrets", type=str, default="secrets.yaml",
                         help="Where to find secrets file")
     parser.add_argument("--config", type=str, default="upload.yaml",
@@ -97,6 +100,9 @@ def main() -> int:
                         help="Generated multiworld zip to upload")
 
     args = parser.parse_args()
+
+    if args.dryrun:
+        log.info("This is a dry run, nothing will be uploaded.")
 
     config = Config()
     try:
@@ -126,8 +132,9 @@ def main() -> int:
     opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(
         jar))
     opener.addheaders = list(http_headers.items())
-    with opener.open(session_url) as r:
-        log.debug("Loading session status code: %r", r.status)
+    if not args.dryrun:
+        with opener.open(session_url) as r:
+            log.debug("Loading session status code: %r", r.status)
 
     log.info("Loading multiworld data")
     with open(args.multiworld, 'rb') as mw_file:
@@ -146,42 +153,54 @@ def main() -> int:
         'application/zip' if args.multiworld.lower().endswith('.zip')
         else 'application/octet-stream'
     )
-    with opener.open(urllib.request.Request(
-            config.upload_url,
-            headers={'Content-Type': content_type},
-            data=mwdata, method='POST')) as r:
-        log.debug("Status code: %r, url: %r", r.status, r.url)
-        u = urllib.parse.urlparse(r.url)
-        path = pathlib.PurePosixPath(u.path)
-        if len(path.parts) >= 3 and path.parts[1] == 'seed':
-            seed_id = path.parts[2]
-            log.debug("Found seed id: %r", seed_id)
-        else:
-            log.error("Failed to find seed id")
-            log.debug("Reponse: %r", r.read())
-            return 1
+    if not args.dryrun:
+        with opener.open(urllib.request.Request(
+                config.upload_url,
+                headers={'Content-Type': content_type},
+                data=mwdata, method='POST')) as r:
+            log.debug("Status code: %r, url: %r", r.status, r.url)
+            u = urllib.parse.urlparse(r.url)
+            path = pathlib.PurePosixPath(u.path)
+            if len(path.parts) >= 3 and path.parts[1] == 'seed':
+                seed_id = path.parts[2]
+                log.debug("Found seed id: %r", seed_id)
+            else:
+                log.error("Failed to find seed id")
+                log.debug("Reponse: %r", r.read())
+                return 1
+    else:
+        seed_id = "seed12345"
+        log.debug("Found seed id (dry-run): %r", seed_id)
 
     log.info("Opening new room")
-    with opener.open(config.new_room_url(seed_id)) as r:
-        log.debug("Status code: %r, url: %r", r.status, r.url)
-        u = urllib.parse.urlparse(r.url)
-        path = pathlib.PurePosixPath(u.path)
-        if len(path.parts) >= 3 and path.parts[1] == 'room':
-            room_id = path.parts[2]
-            log.debug("Found room id: %r", seed_id)
-        else:
-            log.error("Failed to find room id")
-            return 1
+    if not args.dryrun:
+        with opener.open(config.new_room_url(seed_id)) as r:
+            log.debug("Status code: %r, url: %r", r.status, r.url)
+            u = urllib.parse.urlparse(r.url)
+            path = pathlib.PurePosixPath(u.path)
+            if len(path.parts) >= 3 and path.parts[1] == 'room':
+                room_id = path.parts[2]
+                log.debug("Found room id: %r", seed_id)
+            else:
+                log.error("Failed to find room id")
+                return 1
+    else:
+        room_id = "room67890"
+        log.debug("Found room id (dry-run): %r", room_id)
 
     log.info("Waiting for server to start up")
     room_status_url = config.room_status_url(room_id)
     attempts = 30
     port = 0
     for attempt in range(attempts):
-        time.sleep(1)
+        if not args.dryrun:
+            time.sleep(1)
         log.info("Attempt %d/%d", attempt + 1, attempts)
-        with opener.open(room_status_url) as r:
-            data = json.loads(r.read().decode('utf-8'))
+        if not args.dryrun:
+            with opener.open(room_status_url) as r:
+                data = json.loads(r.read().decode('utf-8'))
+        else:
+            data = {'last_port': 1337, 'tracker': 'trackerid10293848576'}
         log.debug("Output: %r", data)
         if type(data) is dict and 'tracker' in data:
             tracker_id = data['tracker']
