@@ -9,7 +9,7 @@ import unpickle
 import zlib
 import io
 import zipfile
-from typing import Any, Optional
+from typing import Any, Optional, Iterator
 
 log = logging.getLogger(__name__)
 
@@ -58,6 +58,14 @@ class MultiWorld:
     version: Optional[tuple[int, int, int]] = (0, 0, 0)
     seed_name: str = ""
     race_mode: int = 0  # TODO: What do the numbers mean?
+
+    def get_slots_by_game_name(self, game_name: str) -> Iterator[SlotInfo]:
+        return filter(lambda slot: slot.game_name == game_name,
+                      self.slot_info.values())
+
+    def get_slot_by_player_name(self, player_name: str) -> Optional[SlotInfo]:
+        return next(filter(lambda slot: slot.player_name == player_name,
+                           self.slot_info.values()), None)
 
 
 unpickle_mapping: unpickle.ResolveMapping = {

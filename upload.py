@@ -26,6 +26,7 @@ class Config:
     host: str = "archipelago.gg"
     message: str = "{room_link}"
     message_output: str = "output.txt"
+    message_engine: str = "format"
     anap_instance: str = "https://tomagueri.fr/anaptracker"
     anap_webhost: str = "archipelago"
 
@@ -61,6 +62,7 @@ class Config:
         else:
             self.host = data.get("host", self.host)
         self.message = data.get("message", self.message)
+        self.message_engine = data.get("message_engine", self.message_engine)
         self.message_output = data.get("message_output", self.message_output)
         if 'anap' in data:
             anap = data['anap']
@@ -102,6 +104,11 @@ def main() -> int:
             config.fill(yaml.safe_load(config_file.read()))
     except FileNotFoundError:
         log.exception("Trying to load config file %r", args.config)
+
+    if config.message_engine == 'jinja2':
+        import jinja2  # Check if we have jinja  # noqa
+    if config.message_engine not in ('format', 'jinja2'):
+        log.error("Unsupported message engine: %s", config.message_engine)
 
     u = urllib.parse.urlparse(config.service)
     with open(args.secrets, "rt") as secret_file:
@@ -186,7 +193,21 @@ def main() -> int:
         break
     log.debug("Found connection: %r:%r", config.host, port)
 
-    message = config.message.format(
+    log.debug("Message template:\n%s", config.message)
+    if config.message_engine == 'jinja2':
+        import jinja2
+        env = jinja2.Environment(
+            variable_start_string='{',
+            variable_end_string='}',
+            trim_blocks=True,
+            lstrip_blocks=True,
+            autoescape=False,
+        )
+        template = env.from_string(config.message)
+        render = template.render
+    elif config.message_engine == 'format':
+        render = config.message.format
+    message = render(
         seed_id=seed_id,
         room_id=room_id,
         room_link=config.room_url(room_id),
@@ -197,6 +218,7 @@ def main() -> int:
         tracker_link=config.tracker_url(tracker_id),
         sphere_tracker_link=config.sphere_tracker_url(tracker_id),
         anap_tracker_link=config.anap_url(room_id),
+        mw=apdata
     )
     log.info("Message:\n%s", message)
     with open(config.message_output, "wt") as msg_out_file:

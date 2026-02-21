@@ -3,20 +3,77 @@ service: "https://archipelago.gg"
 # Which hostname will be used (API doesn't return this)
 host: "archipelago.gg"
 
+# How the message is formatted.
+# jinja2: Use https://jinja.palletsprojects.com/en/stable/templates/
+# 
+#         which allows for some custom programming.
+#         Uses {var} (not {{var}}) and {% control block %} syntax.
+# format: Use Pythons {var}-based formatting, which is simple
+message_engine: jinja2
+
+# Which file to output the message to
+message_output: message.txt
+
 # Chat message to prepare.
+# message_engine: format
+# {seed_id}, {room_id}, {tracker_id}: IDs used in the URLs below
 # {room_link}: Link to the room with the patches and so on
 # {tracker_link}: Link to the webtracker
+# {sphere_tracker_link}: Link to the sphere tracker
 # {host}: Host to connect to (set above)
 # {port}: Port to connect to
+# {password}: Password needed to join, or empty if none set
 # {anap_tracker_link}: Link to anap tracker
+# {mw} (jinja2 only): Access to the MultiWorld internal data, see multiworld.py
+
+# The following section expects the 'jinja2' message engine.
 message: |
-  ## Room
-  Room: {room_link} `/connect {host}:{port}`
+  # Room
+  Room: {room_link}
+  {% if port != 0 %}`/connect {host}:{port}`{% endif %}
   Tracker: {tracker_link}
-  ANAP tracker: {anap_tracker_link}
+  ANAP tracker: https://tomagueri.fr/anaptracker/room/archipelago/{room_id}
+  {% if password %}Password: {password}{% endif +%}
+
+  {% if mw.get_slot_by_player_name("BKJigsaw") != None %}
+  Play [BKJigsaw](https://jigsaw-ap.netlify.app/?hostport={host}:{port}&name=BKJigsaw&password={password})
+  {% endif %}
+  {% if mw.get_slot_by_player_name("BKSimon") != None %}
+  Play BKSimon at https://ishanpm.github.io/ap-sgtpuzzles-web/
+  {%- endif -%}
+
+  {# mw.get_slots_by_game_name returns an iterator and doesn't work with if,
+     so convert into a list where an empty list will not execute the inner. #}
+  {%- if mw.get_slots_by_game_name("Jigsaw") | list +%}
+
+  Quick Jigsaw:
+  {%- for slot in mw.get_slots_by_game_name("Jigsaw") | sort(attribute="player_name") %} [{slot.player_name}](https://jigsaw-ap.netlify.app/?hostport={host}:{port}&name={player_name}&password={password}){% endfor %}
+  {% endif -%}
+
+  {%- if mw.get_slots_by_game_name("Yacht Dice") | list +%}
+
+  Quick Yacht Dice:
+  {%- for slot in mw.get_slots_by_game_name("Yacht Dice") | sort(attribute="player_name") %} [{slot.player_name}](https://yacht-dice-ap.netlify.app/index.html?p=AP&hostname={host}&port={port}&name={player_name}&password={password}){% endfor %}
+  {% endif -%}
+
+  {% if mw.get_slots_by_game_name("Yacht Dice Bliss") | list +%}
+
+  Quick Yacht Dice Bliss:
+  {%- for slot in mw.get_slots_by_game_name("Yacht Dice Bliss") | sort(attribute="player_name") %} [{slot.player_name}](https://yacht-dice-ap.netlify.app/index234.html?p=AP&hostname={host}&port={port}&name={player_name}&password={password}){% endfor %}
+  {% endif -%}
+
+  {'\n\n'}# Wait until after the countdown to start playing!
+
+
+# The following section expects the 'format' message engine.
+# message: |
+#   ## Room
+#   Room: {room_link} `/connect {host}:{port}`
+#   Tracker: {tracker_link}
+#   ANAP tracker: {anap_tracker_link}
+#   Password: {password}
   
-  # Wait until after the countdown to start playing!
-message_output: message.txt
+#   # Wait until after the countdown to start playing!
 
 anaptracker:
   instance: "https://tomagueri.fr/anaptracker"
