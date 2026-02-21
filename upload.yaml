@@ -47,19 +47,19 @@ message: |
   {%- if mw.get_slots_by_game_name("Jigsaw") | list +%}
 
   Quick Jigsaw:
-  {%- for slot in mw.get_slots_by_game_name("Jigsaw") | sort(attribute="player_name") %} [{slot.player_name}](https://jigsaw-ap.netlify.app/?hostport={host}:{port}&name={player_name}&password={password}){% endfor %}
+  {%- for slot in mw.get_slots_by_game_name("Jigsaw") | sort(attribute="player_name") %} [{slot.player_name}](https://jigsaw-ap.netlify.app/?hostport={host}:{port}&name={slot.player_name}&password={password}){% endfor %}
   {% endif -%}
 
   {%- if mw.get_slots_by_game_name("Yacht Dice") | list +%}
 
   Quick Yacht Dice:
-  {%- for slot in mw.get_slots_by_game_name("Yacht Dice") | sort(attribute="player_name") %} [{slot.player_name}](https://yacht-dice-ap.netlify.app/index.html?p=AP&hostname={host}&port={port}&name={player_name}&password={password}){% endfor %}
+  {%- for slot in mw.get_slots_by_game_name("Yacht Dice") | sort(attribute="player_name") %} [{slot.player_name}](https://yacht-dice-ap.netlify.app/index.html?p=AP&hostname={host}&port={port}&name={slot.player_name}&password={password}){% endfor %}
   {% endif -%}
 
   {% if mw.get_slots_by_game_name("Yacht Dice Bliss") | list +%}
 
   Quick Yacht Dice Bliss:
-  {%- for slot in mw.get_slots_by_game_name("Yacht Dice Bliss") | sort(attribute="player_name") %} [{slot.player_name}](https://yacht-dice-ap.netlify.app/index234.html?p=AP&hostname={host}&port={port}&name={player_name}&password={password}){% endfor %}
+  {%- for slot in mw.get_slots_by_game_name("Yacht Dice Bliss") | sort(attribute="player_name") %} [{slot.player_name}](https://yacht-dice-ap.netlify.app/index234.html?p=AP&hostname={host}&port={port}&name={slot.player_name}&password={password}){% endfor %}
   {% endif -%}
 
   {'\n\n'}# Wait until after the countdown to start playing!
