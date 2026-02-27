@@ -62,6 +62,12 @@ message: |
   {%- for slot in mw.get_slots_by_game_name("Yacht Dice Bliss") | sort(attribute="player_name") %} [{slot.player_name}](https://yacht-dice-ap.netlify.app/index234.html?p=AP&{{'hostname': host, 'port': port, 'name': slot.player_name, 'password': password} | urlencode}){% endfor %}
   {% endif -%}
 
+  {%- if mw.get_slots_by_game_name("Nonograhmm") | list +%}
+
+  Quick Nonograhmm:
+  {%- for slot in mw.get_slots_by_game_name("Nonograhmm") | sort(attribute="player_name") %} [{slot.player_name}](https://nonograhmm.netlify.app/?{{'hostname': host, 'port': port, 'name': slot.player_name, 'password': password} | urlencode}){% endfor %}
+  {% endif -%}
+
   {'\n\n'}# Wait until after the countdown to start playing!
 
 
