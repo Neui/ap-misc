@@ -51,6 +51,8 @@ class ServerOptions:
         """
         return "" if self.password is None else str(self.password)
 
+    _all: Optional[dict[str, Any]] = None
+
 
 @dataclasses.dataclass(frozen=True)
 class Hint:
@@ -127,7 +129,8 @@ def parse_bytes(raw_data: bytes) -> MultiWorld:
     server_options = ServerOptions(host=so.get('host', None),
                                    port=so.get('port', None),
                                    password=so.get('password', None),
-                                   server_password=so.get('password', None)
+                                   server_password=so.get('password', None),
+                                   _all=so
                                    )
 
     return MultiWorld(slot_data=data.get('slot_data', {}),
