@@ -68,6 +68,12 @@ message: |
   {%- for slot in mw.get_slots_by_game_name("Nonograhmm") | sort(attribute="player_name") %} [{slot.player_name}](https://nonograhmm.netlify.app/?{{'hostname': host, 'port': port, 'name': slot.player_name, 'password': password} | urlencode}){% endfor %}
   {% endif -%}
 
+  {%- if mw.get_slots_by_game_name("Pokepelago") | list +%}
+
+  Quick Pokepelago:
+  {%- for slot in mw.get_slots_by_game_name("Pokepelago") | sort(attribute="player_name") %} [{slot.player_name}](https://dowlle.github.io/PokepelagoClient?{{'host': host, 'port': port, 'name': slot.player_name, 'password': password} | urlencode}){% endfor %}
+  {% endif -%}
+
   {'\n\n'}# Wait until after the countdown to start playing!
 
 
