@@ -29,7 +29,7 @@ message_output: message.txt
 message: |
   # Room
   Room: {room_link}
-  {% if port != 0 %}`/connect {host}:{port}`{% endif %}
+  {% if port != 0 %}`/connect {host}:{port}`{% endif +%}
   Tracker: {tracker_link}
   ANAP tracker: https://tomagueri.fr/anaptracker/room/{host}/{room_id}
   {% if password %}Password: {password}{% endif +%}
