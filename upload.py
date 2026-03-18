@@ -27,8 +27,6 @@ class Config:
     message: str = "{room_link}"
     message_output: str = "output.txt"
     message_engine: str = "format"
-    anap_instance: str = "https://tomagueri.fr/anaptracker"
-    anap_webhost: str = "archipelago"
 
     @property
     def upload_url(self) -> str:
@@ -49,11 +47,6 @@ class Config:
     def sphere_tracker_url(self, tracker_id: str) -> str:
         return self.service + '/sphere_tracker/' + tracker_id
 
-    def anap_url(self, room_id: str) -> str:
-        # TODO: Use self.anap_webhost?
-        # https://github.com/OriginalTomPouce/anaptracker/blob/3cfa3d925b88864cb1ef723a649b75c10b03c009/src/components/Home.vue#L76
-        return self.anap_instance + '/room/' + room_id
-
     def fill(self, data):
         self.service = data.get('service', self.service).rstrip('/')
         if 'host' not in data.keys():
@@ -64,11 +57,6 @@ class Config:
         self.message = data.get("message", self.message)
         self.message_engine = data.get("message_engine", self.message_engine)
         self.message_output = data.get("message_output", self.message_output)
-        if 'anap' in data:
-            anap = data['anap']
-            self.anap_instance = anap.get('instance', self.anap_instance) \
-                .rstrip('/')
-            self.anap_webhost = anap.get('webhost', self.anap_webhost)
 
 
 def generate_multipart_file(data, filename: str,
@@ -236,7 +224,6 @@ def main() -> int:
         tracker_id=tracker_id,
         tracker_link=config.tracker_url(tracker_id),
         sphere_tracker_link=config.sphere_tracker_url(tracker_id),
-        anap_tracker_link=config.anap_url(room_id),
         mw=apdata
     )
     log.info("Message:\n%s", message)
