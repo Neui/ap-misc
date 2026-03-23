@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: CC0-1.0
 
 import argparse
-import csv
 import json
 import logging
 import pathlib
@@ -11,12 +10,12 @@ import sys
 import yaml
 import zipfile
 from typing import Any
+from apworlds import Database
 
 
 log = logging.getLogger(__name__)
 meta_root_options = {"meta_description"}
 really_keep = {"A Link to the Past"}
-keep_values = {"yes", "Yes", "true", "True", "keep"}
 
 
 def get_manifest(world_path: pathlib.Path) -> Any | None:
@@ -45,6 +44,9 @@ def main() -> int:
                         help="Don't actually delete/move the apworlds")
     parser.add_argument("--database", type=str, default=None,
                         help="Where to find information about APWorlds")
+    parser.add_argument("--add-database", action='append', default=[],
+                        dest='add_database',
+                        help="Where to find more information about APWorlds")
     parser.add_argument("--keep", type=str, default=None,
                         help="Which APWorlds to not strip, comma separated game list")
     parser.add_argument("--move-to", type=str, default=None, dest='moveto',
@@ -64,29 +66,32 @@ def main() -> int:
     games |= really_keep
     log.debug("Games to really keep (built-in): %r", really_keep)
 
-    # TODO: Look into DB
+    db = Database()
+
     if args.database is None:
-        database_path = pathlib.Path("apworlds.csv")
+        script_dir = pathlib.Path(__file__).absolute().parent
+        try:
+            db.insert_file(script_dir / "apworlds.csv")
+        except FileNotFoundError:
+            pass  # Only error when it was specified
     else:
-        database_path = pathlib.Path(args.database)
-    db = []
-    try:
-        with open(database_path) as f:
-            db = list(csv.DictReader(f))
-    except FileNotFoundError:
-        if args.database is not None:
-            raise  # Only error when it was specified
+        db.insert_file(pathlib.Path(args.database))
 
-    db_keep = set((entry['game']
-                   for entry in db
-                   if 'game' in entry and entry.get('keep') in keep_values))
-    log.debug("Games to keep (DB): %r", db_keep)
-    games |= db_keep
-    del db_keep
+    for extra_db_path in args.add_database:
+        db.insert_file(pathlib.Path(extra_db_path))
 
-    db_games: dict[str, str] = {entry['name']: entry['game']
-                for entry in db
-                if 'name' in entry and 'game' in entry}
+    db_keep_game = {entry.game_name
+                    for entry in db.entries
+                    if entry.keep and entry.game_name != ""}
+    db_keep_file = {entry.game_name
+                    for entry in db.entries
+                    if entry.keep and entry.file_name != ""}
+    log.debug("Games to keep (DB): %r", db_keep_game)
+    games |= db_keep_game
+    del db_keep_game
+
+    db_games: dict[str, str] = {entry.file_name: entry.game_name
+                                for entry in db.entries}
 
     for child in pathlib.Path(args.players).iterdir():
         if not child.is_file():
@@ -199,6 +204,12 @@ def main() -> int:
             continue  # Keep the official client
         if game not in games:
             apworlds_to_remove[world_path] = game
+
+    for world_path, game_name in list(apworlds_to_remove.items()):
+        if db.should_keep_game(game_name) \
+                or db.should_keep_file(world_path.stem):
+            log.debug("Database wants to keep %r (%r)", world_path, game_name)
+            del apworlds_to_remove[world_path]
 
     if args.moveto:
         move_to_path = pathlib.Path(args.moveto)
