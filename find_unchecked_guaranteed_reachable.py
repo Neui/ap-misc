@@ -5,6 +5,11 @@ import unpickle
 import io
 import enum
 
+import platform
+if platform.system() == "Windows":
+    import sys  # Workaround for file redirection on Windows
+    sys.stdout.reconfigure(encoding='utf-8')
+
 # AP multidata from in the output .zip
 AP_PATH = r"/home/neui/AP/Archipelago/output/AP_63582889109049541795.zip"
 UNREACHABLE_SPHERE = 232
