@@ -1,5 +1,4 @@
 name,keep,game
-Twilight Princess,,Twilight Princess
 adventure,,Adventure
 ahit,,A Hat in Time
 air_delivery,,Air Delivery
@@ -13,6 +12,7 @@ apgo,,Archipela-Go!
 apquest,,APQuest
 apsudoku,,Sudoku
 aquaria,,Aquaria
+archipeladoku,,Archipeladoku
 astalon,,Astalon
 aus,,An Untitled Story
 autopelago,,Autopelago
@@ -21,45 +21,52 @@ balatro,,Balatro
 banjo_tooie,,Banjo-Tooie
 bfm,,Brave Fencer Musashi
 bits_and_bops,,Bits & Bops
+blasphemous2,,Blasphemous 2
 blasphemous,,Blasphemous
 bloonstd6,,Bloons TD6
-bomb_rush_cyberfunk,,Bomb Rush Cyberfunk
 bomberman_64,,Bomberman 64
+bomb_rush_cyberfunk,,Bomb Rush Cyberfunk
 brotato,,Brotato
 buckshot,,Buckshot Roulette
 bumpstik,,Bumper Stickers
 candybox2,,Candy Box 2
 cat_quest,,Cat Quest
-cave_story,,Cave Story
 cavern_of_dreams,,Cavern of Dreams
 cavesofqud,,Caves of Qud
+cave_story,,Cave Story
 cccharles,,Choo-Choo Charles
-celeste,,Celeste
 celeste64,,Celeste 64
+celeste,,Celeste
 celeste_open_world,,Celeste (Open World)
 checksfinder,,ChecksFinder
 checksmate,,ChecksMate
 civ_6,,Civilization VI
 civv,,Civilization V
+cod_bo3,,Black Ops 3 - Zombies
 crosscode,,CrossCode
 crossword_ap,,CrosswordAP
 crystal_project,,Crystal Project
 ctjot,,Chrono Trigger Jets of Time
 cuphead,,Cuphead
 cv64,,Castlevania 64
-cv_dos,,Castlevania: Dawn of Sorrow
 cvcotm,,Castlevania - Circle of the Moon
+cv_dos,,Castlevania: Dawn of Sorrow
 cvhodis,,Castlevania - Harmony of Dissonance
+cvlod,,Castlevania: Legacy of Darkness
 dark_souls_2,,Dark Souls II
 dark_souls_3,,Dark Souls III
 dc1,,Dark Cloud 1
+deltarune,,DELTARUNE
 diddy_kong_racing,,Diddy Kong Racing
 dkc2,,Donkey Kong Country 2
 dkc3,,Donkey Kong Country 3
+dkc,,Donkey Kong Country
 dlcquest,,DLCQuest
 dmc3,,Devil May Cry 3
 dome_keeper,,Dome Keeper
+doom_1993_beta,,DOOM 1993 (Beta)
 doom_1993,,DOOM 1993
+doom_ii_beta,,DOOM II (Beta)
 doom_ii,,DOOM II
 doronko_wanko,,DORONKO WANKO
 dsr,,Dark Souls Remastered
@@ -70,12 +77,13 @@ factorio,,Factorio
 factorio_saws,,Factorio - Space Age Without Space
 faxanadu,,Faxanadu
 fe8,,Fire Emblem Sacred Stones
-ff1,,Final Fantasy
 ff12_open_world,,Final Fantasy 12 Open World
+ff1,,Final Fantasy
+ff1pr,,FF1 Pixel Remaster
 ff4fe,,Final Fantasy IV Free Enterprise
 ffmq,,Final Fantasy Mystic Quest
-ffta,,Final Fantasy Tactics Advance
 ffta2,,Final Fantasy Tactics A2
+ffta,,Final Fantasy Tactics Advance
 fftii,,Final Fantasy Tactics Ivalice Island
 ffxiitm,,Final Fantasy XII Trial Mode
 ffxiv,,Manual_FFXIV_Silasary
@@ -83,16 +91,20 @@ fm,,Yu-Gi-Oh! Forbidden Memories
 fnafw,,FNaFW
 frogmonster,,Frogmonster
 garfkart,,Garfield Kart - Furious Racing
+gatoroboto_b_side,,Gato Roboto B-Side
 generic,,Archipelago
 gl,,Gauntlet Legends
 glover,,Glover
 glyphs,,GLYPHS
+grappledog,,Grapple Dog
 grim_dawn,,Grim Dawn
 grinch,,The Grinch
 gstla,,Golden Sun The Lost Age
+guardianlegend,,The Guardian Legend
 hades,,Hades
 haste,,Haste
 hcniko,,Here Comes Niko!
+heretic_beta,,Heretic (Beta)
 heretic,,Heretic
 hexcells_infinite,,Hexcells Infinite
 hi_fi_rush,,Hi-Fi RUSH
@@ -122,8 +134,8 @@ kirby_air_ride,,Kirby Air Ride
 kon,,K-On! After School Live!!
 kss,,Kirby Super Star
 ktane,,Keep Talking and Nobody Explodes
-ladx,,Links Awakening DX
 ladx_beta,,Links Awakening DX Beta
+ladx,,Links Awakening DX
 landstalker,,Landstalker - The Treasures of King Nole
 lego_star_wars_tcs,,Lego Star Wars: The Complete Saga
 lethal_company,,Lethal Company
@@ -135,8 +147,6 @@ lrff13,,Lightning Returns: Final Fantasy XIII
 lufia2ac,,Lufia II Ancient Cave
 luigismansion,,Luigi's Mansion
 lunacid,,Lunacid
-manual_EuroTruckSim2_bdi,,Manual_EuroTruckSim2_bdi
-manual_PLA_miro,,Manual_PLA_Miro
 manual_baldisbasicsclassicremastered_wolfboi008,,Manual_BaldisBasicsClassicRemastered_WolfBoi008
 manual_battleblocktheater_commanderdot,,Manual_BattleBlockTheater_commanderdot
 manual_betrayal_axxroy,,Manual_Betrayal_Axxroy
@@ -144,6 +154,7 @@ manual_blocktales_wolfboi008,,Manual_BlockTales_WolfBoi008
 manual_bo6libertyfalls_delcatty16,,Manual_BO6LibertyFalls_Delcatty16
 manual_borderlands4_jkxwing,,Manual_Borderlands4_jkxWinG
 manual_buckshotroulette_wolfboi008,,Manual_BuckshotRoulette_WolfBoi008
+manual_cars_wolfboi008,,Manual_Cars_WolfBoi008
 manual_cartoonnetworkpunchtimeexplosionxl_bunkbunker,,Manual_CartoonNetworkPunchTimeExplosionXL_BunkBunker
 manual_clubhousegames51_buck,,Manual_ClubhouseGames51_Buck
 manual_cookservedelicious3_farren,,Manual_CookServeDelicious3_Farren
@@ -158,6 +169,7 @@ manual_drg_miro,,Manual_DRG_Miro
 manual_eowechohunt_killedragon,,Manual_EoWEchoHunt_killedragon
 manual_epicuniversewandmagic_tornadowizard,,Manual_EpicUniverseWandMagic_tornadowizard
 manual_ets2_dopin,,Manual_ETS2_dopin
+manual_EuroTruckSim2_bdi,,Manual_EuroTruckSim2_bdi
 manual_ffdissidia_silasary,,Manual_ffdissidia_silasary
 manual_ffxivpotd_goomboss,,Manual_FFXIVPotD_Goomboss
 manual_fifa2001_satanos,,Manual_Fifa2001_Satanos
@@ -176,11 +188,13 @@ manual_ispyspookymansionwiinormal_mjb20077,,Manual_ISPYSpookyMansionWiiNormal_MJ
 manual_jumpultimatestars_pizzaking405,,Manual_JumpUltimateStars_Pizzaking405
 manual_kirbyairriders_manakatti,,Manual_KirbyAirRiders_ManaKatti
 manual_kirbyandtheforgottenland_noodlelizer,,Manual_KirbyandtheForgottenLand_Noodlelizer
+manual_kotamaacademycitadel_bluepinkdragon,,Manual_KotamaAcademyCitadel_bluepinkdragon
 manual_ktanecenturion_awesome7285,,Manual_KTaNE Centurion_Awesome7285
 manual_legorockband_gwaf,,Manual_LEGORockBand_GWAF
 manual_mariokart7_bigbradley,,Manual_MarioKart7_BigBradley
 manual_mariokartds_xanderoni,,Manual_MarioKartDS_Xanderoni
 manual_marioparty9_smashebrada,,Manual_MarioParty9_SmashEBrada
+manual_marvelrivals_snolidice,,Manual_MarvelRivals_SnolidIce
 manual_mhrisehub_axxroy,,Manual_MHRiseHub_Axxroy
 manual_mkwii_magnetico,,Manual_mkwii_magnetico
 manual_mmxlcxchalllenge_pizzaking405,,Manual_MMXLCXCHalllenge_Pizzaking405
@@ -188,10 +202,12 @@ manual_monsterhunterwilds_raving,,Manual_MonsterHunterWilds_Raving
 manual_monsterhunterworld_panic,,Manual_MonsterHunterWorld_PaNIC
 manual_newsupermariobroswii_zuils,,Manual_NewSuperMarioBrosWii_zuils
 manual_nightmarekart_lolz,,Manual_NightmareKart_LOLZ1190
+manual_nullscaperoblox_sucrosesnowstorm,,Manual_NullscapeROBLOX_sucrosesnowstorm
 manual_onedeckdungeon_vertlizard,,Manual_onedeckdungeon_vertlizard
 manual_onemorenight_wolfboi008,,Manual_OneMoreNight_WolfBoi008
 manual_phasmophobia_tinmines,,Manual_Phasmophobia_TinMines
 manual_pizzatower_steph,,Manual_PizzaTower_Steph
+manual_PLA_miro,,Manual_PLA_Miro
 manual_plantsvszombies2gardendless_trikehard,,Manual_PlantsVsZombies2Gardendless_Trikehard
 manual_platinumbattlezone_linneus,,Manual_PlatinumBattleZone_Linneus
 manual_playtimewithpercy_wolfboi008,,Manual_PlaytimewithPercy_WolfBoi008
@@ -209,12 +225,16 @@ manual_roguecraft_connorminer,,Manual_Roguecraft_ConnorMiner
 manual_shovelknighttreasuretrove_qlilaoftorment,,Manual_ShovelKnightTreasureTrove_QLilaOfTorment
 manual_silenthillspt_theagentofchaos,,Manual_SilentHillsPT_TheAgentOfChaos
 manual_slimerancher_axxroy,,Manual_SlimeRancher_Axxroy
+manual_smo_main_ending_melen,,Manual_smo_main_ending_melen
 manual_smo_mp3,,Manual_SMO_mp3
+manual_songbirdsymphony_mjb20077,,Manual_SongbirdSymphony_MJB20077
 manual_sonicxshadowgenerations_flutterrazzo,,Manual_SonicXShadowGenerations_FlutterRazzo
 manual_splatoon3_magekitlemonfoot,,Manual_Splatoon 3_MageKitLemonfoot
+manual_spongebobmoviegame_loaf,,Manual_Spongebobmoviegame_Loaf
 manual_spyrothedragon_muffinjets,,Manual_SpyroTheDragon_MuffinJets
 manual_ssbmslippi_delta,,Manual_SSBMSlippi_Delta
 manual_stray_arnold0,,Manual_Stray_Arnold0
+manual_superbomberman3_phye,,Manual_SuperBomberman3_Phye
 manual_teamfortress2_gp,,Manual_TeamFortress2_GP
 manual_thelordoftheringsthereturnoftheking_zojalyx,,Manual_TheLordoftheRingsTheReturnoftheKing_Zojalyx
 manual_tmnf_dopin,,Manual_TMNF_dopin
@@ -226,16 +246,19 @@ manual_uncannycatgolf_spoonsnoops,,Manual_UncannyCatGolf_spoonsnoops
 manual_vividlope_redpenguiin,,Manual_VIVIDLOPE_redpenguiin
 manual_vividstasis_juegariel,,Manual_vividstasis_JuegAriel
 manual_welovekatamarireroll_sapphisylph,,Manual_WeLoveKatamariReroll_sapphisylph
+manual_winxclubgba_shadowspussy,,Manual_WinxClubGBA_shadowspussy
 manual_worldofwarcraftdungeons_chakraa,,Manual_WorldofWarcraftDungeons_Chakraa
 mario_kart_double_dash,,Mario Kart Double Dash
-mario_super_sluggers,,Mario Super Sluggers
 marioland2,,Super Mario Land 2
+mario_super_sluggers,,Mario Super Sluggers
 megamix,,Hatsune Miku Project Diva Mega Mix+
 melee,,Super Smash Bros. Melee
 meritous,,Meritous
 messenger,,The Messenger
 metrocubevania,,MetroCUBEvania
 metroidfusion,,Metroid Fusion
+minecraft_dig,,Minecraft Dig
+minecraft_fabric,,Minecraft Fabric
 minishoot,,Minishoot Adventures
 minit,,Minit
 mk64,,Mario Kart 64
@@ -244,22 +267,25 @@ mm1,,Mega Man
 mm2,,Mega Man 2
 mm3,,Mega Man 3
 mmbn3,,MegaMan Battle Network 3
-mmx,,Mega Man X
 mmx2,,Mega Man X2
 mmx3,,Mega Man X3
+mmx,,Mega Man X
+momodoramoonlitfarewell,,Momodora Moonlit Farewell
 monster_sanctuary,,Monster Sanctuary
 musedash,,Muse Dash
 mzm,,Metroid Zero Mission
 nine_sols,,Nine Sols
 no100f,,Scooby-Doo! Night of 100 Frights
-noita,,Noita
 noita-killsanity,,Noita-Killsanity
+noita,,Noita
+nonograhmm,,Nonograhmm
 oot,,Ocarina of Time
 oot_soh,,Ship of Harkinian
 openrct2,,OpenRCT2
 oribf,,Ori and the Blind Forest
 osrs,,Old School Runescape
 osu,,osu!
+ouakatamari,,Once Upon a Katamari
 outer_wilds,,Outer Wilds
 overcooked2,,Overcooked! 2
 paint,,Paint
@@ -275,6 +301,7 @@ pokemon_frlg,,Pokemon FireRed and LeafGreen
 pokemon_platinum,,Pokemon Platinum
 pokemon_rb,,Pokemon Red and Blue
 pokepark,,PokePark
+pokepelago,,Pokepelago
 portal2,,Portal 2
 powerwashsimulator,,Powerwash Simulator
 pseudoregalia,,Pseudoregalia
@@ -301,6 +328,7 @@ sadx,,Sonic Adventure DX
 satisfactory,,Satisfactory
 saving_princess,,Saving Princess
 sc2,,Starcraft 2
+Schedule_I,,Schedule I
 severed_soul,,Severed Soul
 sgtpuzzles,,Simon Tatham's Portable Puzzle Collection
 shadow_the_hedgehog,,Shadow The Hedgehog
@@ -313,28 +341,29 @@ slime_rancher,,Slime Rancher
 slowrelease,true,Slow Release
 sly1,,Sly Cooper and the Thievius Raccoonus
 sly2,,Sly 2: Band of Thieves
-sm,,Super Metroid
 sm64ex,,Super Mario 64
 smsa2,,Super Mario Sunshine Arcade 2
+sms,,Super Mario Sunshine
+sm,,Super Metroid
 smushi_come_home,,Smushi Come Home
 smw,,Super Mario World
 smz3,,SMZ3
 soe,,Secret of Evermore
 sonic_heroes,,Sonic Heroes
-sonic_rush,,Sonic Rush
 sonicriders,,Sonic Riders
+sonic_rush,,Sonic Rush
 sotn,,Symphony of the Night
 soulblazer,,Soul Blazer
 spelunker,,Spelunker
 spelunky2,,Spelunky 2
 spinball,,Spinball
 spire,,Slay the Spire
-spyro,,Spyro the Dragon
 spyro2,,Spyro 2
 spyro3,,Spyro 3
+spyro,,Spyro the Dragon
 ss,,Skyward Sword
-star_fox_64,,Star Fox 64
 stardew_valley,,Stardew Valley
+star_fox_64,,Star Fox 64
 streets_of_rage,,Streets of Rage
 subnautica,,Subnautica
 superjunkoid,,Super Junkoid
@@ -350,9 +379,9 @@ th08,,Touhou Eiyashou ~ Imperishable Night
 timespinner,,Timespinner
 tits_the_3rd,,Trails in the Sky the 3rd
 tje,,ToeJam and Earl
-tloz,,The Legend of Zelda
 tloz_ooa,,The Legend of Zelda - Oracle of Ages
 tloz_oos,,The Legend of Zelda - Oracle of Seasons
+tloz,,The Legend of Zelda
 tmc,,The Minish Cap
 toem,,TOEM: A Photo Adventure
 tracker,true,Universal Tracker
@@ -360,31 +389,36 @@ trackmania,,Trackmania
 ttyd,,Paper Mario: The Thousand-Year Door
 tunic,,TUNIC
 turnipboy,,TurnipBoy
+Twilight Princess,,Twilight Princess
 twistycube,,Twisty Cube
 tww,,The Wind Waker
-ty_the_tasmanian_tiger,,Ty the Tasmanian Tiger
+tyrian,,Tyrian
 ty_the_tasmanian_tiger_2,,Ty the Tasmanian Tiger 2
 ty_the_tasmanian_tiger_3,,Ty the Tasmanian Tiger 3
-tyrian,,Tyrian
+ty_the_tasmanian_tiger,,Ty the Tasmanian Tiger
 ultrakill,,ULTRAKILL
 unbeatable_arcade,,UNBEATABLE Arcade
 undertale,,Undertale
 unfair_flips,,Unfair Flips
 v6,,VVVVVV
 vespadian,,Vespadian
+void_sols,,Void Sols
 voidstranger,,Void Stranger
 voltorb_flip,,Voltorb Flip
 waffles,,SMW: Spicy Mycena Waffles
-wargroove,,Wargroove
 wargroove2,,Wargroove 2
+wargroove,,Wargroove
 webfishing,,WEBFISHING
 witness,,The Witness
-wl,,Wario Land
 wl4,,Wario Land 4
+wl,,Wario Land
 wordipelago,,Wordipelago
 wordsearch,,WordSearch
 x2wotc,,XCOM 2 War of the Chosen
+yachtdicebliss,,Yacht Dice Bliss
 yachtdice,,Yacht Dice
+YARGRockBand3,,YARGRockBand3
+yarg,,YARG
 yoku,,Yoku's Island Express
 yoshisisland,,Yoshi's Island
 yugioh06,,Yu-Gi-Oh! 2006
