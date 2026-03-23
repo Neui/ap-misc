@@ -118,7 +118,13 @@ def main() -> int:
                 info.warning(f"{child} #{i + 1} does not have 'game'")
             if 'meta_description' in content:
                 log.info(f"Found meta file {child} #{i + 1}")
-                games.update((category for category in content.keys() if category not in meta_root_options))
+                games.update((category
+                              for category in content.keys()
+                              if category not in meta_root_options))
+                log.debug("%s #%i (meta): Found ['%s']", child, i,
+                          list(category
+                               for category in content.keys()
+                               if category not in meta_root_options))
 
     log.debug("Games to keep: %s", games)
 
@@ -201,6 +207,7 @@ def main() -> int:
                 continue
         game = f'Manual_{game_name}_{creator_name}'
         if game_name == "Stable" or game_name == "Unstable":
+            log.debug("Keeping %r because the manual client is ugh", game)
             continue  # Keep the official client
         if game not in games:
             apworlds_to_remove[world_path] = game
@@ -227,6 +234,9 @@ def main() -> int:
                     world_path.unlink()
             except:
                 log.exception("Failed to (re)move %s", world_path)
+
+    if args.dryrun:
+        log.info("This was a dry run, no modifications has been made.")
 
     return 0
 
