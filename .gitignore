@@ -4,7 +4,7 @@ message.txt
 *.archipelago
 *.zip
 *.apworld
-worlds/generate_csv/apworlds.csv
+worlds/generate_apworlds_csv/apworlds.csv
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
