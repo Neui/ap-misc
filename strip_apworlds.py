@@ -5,6 +5,7 @@
 import argparse
 import json
 import logging
+import os
 import pathlib
 import sys
 import yaml
@@ -224,12 +225,17 @@ def main() -> int:
         move_to_path = None
 
     for world_path in apworlds_to_remove.keys():
-        log.debug("Removing %s", world_path)
+        if move_to_path is not None:
+            log.debug("Moving %s", world_path)
+        else:
+            log.debug("Removing %s", world_path)
         if not args.dryrun:
             try:
                 if move_to_path is not None:
-                    log.error("TODO: Implement move to path")
-                    raise NotImplementedError
+                    if hasattr(world_path, 'move_into'):  # Python 3.14+
+                        world_path.move_into(move_to_path)
+                    else:
+                        os.replace(world_path, move_to_path / world_path.name)
                 else:
                     world_path.unlink()
             except:
