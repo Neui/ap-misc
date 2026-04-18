@@ -43,7 +43,7 @@ class Database:
         self.from_game_name: dict[str, DatabaseEntry] = {}
 
     def insert_file(self, file_path) -> None:
-        with open(file_path) as f:
+        with open(file_path, "rt", encoding='utf-8-sig', newline='\n') as f:
             self.insert_multiple(map(DatabaseEntry.from_csv_line, csv.DictReader(f)))
 
     def insert_multiple(self, entries: Iterable[DatabaseEntry]) -> None:
@@ -82,7 +82,7 @@ class Database:
                 if other_field_name not in field_names:
                     field_names.add(other_field_name)
 
-        with open(path, 'w', encoding='utf-8') as f:
+        with open(path, 'w', encoding='utf-8', newline='\n') as f:
             writer = csv.DictWriter(f, field_names)
             writer.writeheader()
             outputs = [entry.to_output_dict() for entry in self.entries]

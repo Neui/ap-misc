@@ -35,7 +35,7 @@ def run_generate_apworlds(*args) -> None:
         if not hasattr(world_class, 'zip_path') \
                 or not isinstance(world_class.zip_path, pathlib.PurePath):
             continue
-        is_core = "/lib/worlds/" in "/".join(map(str, world_class.zip_path.parents))
+        is_core = "/lib/worlds/" in ("/".join(world_class.zip_path.parents[0].parts) + "/")
         if not args.core and is_core:
             continue
         db.insert(apworlds.DatabaseEntry(file_name=world_class.zip_path.stem,
