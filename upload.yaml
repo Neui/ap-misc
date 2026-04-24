@@ -31,7 +31,7 @@ message: |
   Room: {room_link}
   {% if port != 0 %}`/connect {host}:{port}`{% endif +%}
   Tracker: {tracker_link}
-  ANAP tracker: https://tomagueri.fr/anaptracker/room/{host}/{room_id}
+  ANAP tracker: https://anaptracker.tomagueri.fr/{host}/room/{room_id}
   {% if password %}Password: {password}{% endif +%}
 
   {% if mw.get_slot_by_player_name("BKJigsaw") != None %}
